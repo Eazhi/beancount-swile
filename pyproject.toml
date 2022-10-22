@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "beancount-swile"
+version = "0.1.0"
+description = "Beancount Importer for Swile transactions"
+authors = ["Paul Khuat-Duy <paul@khuat-duy.org>"]
+license = "MIT"
+classifiers = [
+    "Environment :: Plugins",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Office/Business :: Financial :: Accounting",
+]
+repository = "https://github.com/Eazhi/beancount-swile"
+keywords = ["banking", "beancount", "cli-accounting", "finance"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.1"
+typer = "^0.6.1"
+beancount = "^2.3.5"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+isort = "^5.10.1"
+black = "^22.10.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
