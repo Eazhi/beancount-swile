@@ -19,8 +19,8 @@ class SwileImporter(importer.ImporterProtocol):
 
     def identify(self, file_) -> bool:
         try:
-            with open(file_.name, encoding=self.file_encoding) as fd:
-                line = fd.readline().strip()
+            with open(file_.name, encoding=self.file_encoding) as transaction_file:
+                _ = transaction_file.readline().strip()
         except ValueError:
             return False
         return True
@@ -28,8 +28,8 @@ class SwileImporter(importer.ImporterProtocol):
     def extract(self, file_, existing_entries=None):
         entries = []
 
-        with open(file_.name, encoding=self.file_encoding) as fd:
-            transactions = json.load(fd)
+        with open(file_.name, encoding=self.file_encoding) as transaction_file:
+            transactions = json.load(transaction_file)
 
         for index, line in enumerate(transactions):
             failed_transaction = [

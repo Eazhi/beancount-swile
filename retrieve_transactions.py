@@ -15,7 +15,9 @@ def main(token: str, output_file: str = "all_transactions.json"):
     """
     now = datetime.now(timezone.utc)
     response = requests.get(
-        f"{SWILE_URL}?before={now}&per=50", headers={"Authorization": f"Bearer {token}"}
+        f"{SWILE_URL}?before={now}&per=50",
+        headers={"Authorization": f"Bearer {token}"},
+        timeout=15,
     )
     if not response.ok:
         raise Exception(f"Request failed: {response.text}")
@@ -26,14 +28,15 @@ def main(token: str, output_file: str = "all_transactions.json"):
         response = requests.get(
             f"{SWILE_URL}?before={date}&per=50",
             headers={"Authorization": f"Bearer {token}"},
+            timeout=15,
         )
         if not response.ok:
             raise Exception(f"Request failed: {response.text}")
 
         transactions += response.json()["data"]
 
-    with open(output_file, "w+") as f:
-        json.dump(transactions, f, indent=2)
+    with open(output_file, "w+") as transactions_file:
+        json.dump(transactions, transactions_file, indent=2)
 
 
 if __name__ == "__main__":
