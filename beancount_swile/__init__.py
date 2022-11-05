@@ -49,7 +49,11 @@ class SwileImporter(importer.ImporterProtocol):
                 for a in line["operation"]["transactions"]
                 if a["payment_method"] == "Wallets::MealVoucherWallet"
                 and a["type"] == "ORIGIN"
+                and a["status"] != "RELEASED"
             ]
+            if not voucher_payments:
+                continue
+
             meta = data.new_metadata(file_.name, index, {"id": line["id"]})
 
             amount_eur = Decimal(str(voucher_payments[0]["amount"]["value"]))
