@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "beancount-swile"
-version = "0.1.2"
+version = "0.1.3"
 description = "Beancount Importer for Swile transactions"
 authors = ["Paul Khuat-Duy <paul@khuat-duy.org>"]
 license = "MIT"

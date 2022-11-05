@@ -27,11 +27,15 @@ class SwileImporter(importer.ImporterProtocol):
 
     def extract(self, file_, existing_entries=None):
         entries = []
+        entry_ids = set()
 
         with open(file_.name, encoding=self.file_encoding) as transaction_file:
             transactions = json.load(transaction_file)
 
         for index, line in enumerate(transactions):
+            if line["id"] in entry_ids:  # Also skip existing entries
+                continue
+            entry_ids.add(line["id"])
             failed_transaction = [
                 a
                 for a in line["operation"]["transactions"]
@@ -45,7 +49,11 @@ class SwileImporter(importer.ImporterProtocol):
                 for a in line["operation"]["transactions"]
                 if a["payment_method"] == "Wallets::MealVoucherWallet"
                 and a["type"] == "ORIGIN"
+                and a["status"] != "RELEASED"
             ]
+            if not voucher_payments:
+                continue
+
             meta = data.new_metadata(file_.name, index, {"id": line["id"]})
 
             amount_eur = Decimal(str(voucher_payments[0]["amount"]["value"]))
